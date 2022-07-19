@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">EMS</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">View All Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/add_employee/">Add An Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/remove_employee/">Remove An Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/filter_employee/">Filter Employee Details</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% if msg %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{msg}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<div class="container">
+    <h1 class="my-3">Add Employee</h1>
+    <hr/>
+    <form class="row my-3" action="/add_employee/" method="post">
+        {% csrf_token %}
+        <div class="mb-3 col-md-6">
+            <label for="first_name" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" value="{{first_name}}">
+        </div>
+        <div class="mb-3 col-md-6">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" value="{{last_name}}">
+        </div>
+        <div class="mb-3 col-md-6">
+            <label for="department" class="form-label">Department</label>
+            <div class="dropdown">
+                <select id="department" name="department">
+                    {% for dept in departments %}
+                    <option class="dropdown-item" value="{{dept.name}}">{{dept.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 col-md-6">
+            <label for="salary" class="form-label">Salary</label>
+            <input type="number" class="form-control" id="salary" name="salary" value="{{salary}}">
+        </div>
+        <div class="mb-3 col-md-6">
+            <label for="bonus" class="form-label">Bonus</label>
+            <input type="number" class="form-control" id="bonus" name="bonus" value="{{bonus}}">
+        </div>
+        <div class="mb-3 col-md-6">
+            <label for="role" class="form-label">Role</label>
+            <div class="dropdown">
+                <select id="role" name="role">
+                    {% for role in roles %}
+                    <option value="{{role.name}}">{{role.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 col-md-6">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="number" class="form-control" id="phone" name="phone" value="{{phone}}">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Add Employee</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
